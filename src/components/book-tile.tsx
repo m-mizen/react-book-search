@@ -31,17 +31,18 @@ const BookThumbnail = styled.img`
 `
 
 
-function BookTile({book}) {
-
-    const {title, subtitle, averageRating, ratingsCount, imageLinks} = book.volumeInfo;
-    const thumbnail = imageLinks?.thumbnail || null;
+function BookTile({ book }) {
+    const { title, subtitle, averageRating, ratingsCount, imageLinks } = book.volumeInfo;
+    let thumbnail = imageLinks?.thumbnail || null;
+    // Some of the images are insecure. Fixes this issue
+    thumbnail = thumbnail.replace('http://', 'https://');
 
     return (
         <Tile>
-            <BookTitle>{ title }</BookTitle>
-            <BookSubTitle>{ subtitle }</BookSubTitle>
-            { thumbnail && <BookThumbnail src={thumbnail} alt={`Book Cover for ${title}`}/> }
-            <Stars rating={averageRating} ratings={ratingsCount}/>
+            <BookTitle>{title}</BookTitle>
+            <BookSubTitle>{subtitle}</BookSubTitle>
+            { thumbnail && <BookThumbnail src={thumbnail} alt={`Book Cover for ${title}`} />}
+            <Stars rating={averageRating} ratings={ratingsCount} />
         </Tile>
     )
 }
